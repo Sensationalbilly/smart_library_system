@@ -1,0 +1,88 @@
+[
+  {
+    "id": "dbc90e25-b6ef-42cc-9ae3-fc268cd27b5c",
+    "username": "user123",
+    "password": "demo123",
+    "token": "a99e5a24-42aa-4e49-8818-83c3d5e0ed13"
+  },
+  {
+    "id": "3ee39377-10a2-437a-a0fe-c70ab47ad04d",
+    "firstname": "Mohamed",
+    "lastname": "Barry",
+    "email": "locobilly2006@gmail.com",
+    "username": "locobilly2006@gmail.com",
+    "password": "Lawrence2006@",
+    "token": "954e6384-c4e4-4016-a610-9eb240a98ddb",
+    "createdAt": "2025-12-01T20:50:42.320Z"
+  },
+  {
+    "id": "e54ce5ea-a5e6-4898-98e4-566a68265e8d",
+    "firstname": "Billy",
+    "lastname": "Loco",
+    "email": "mb80050047@gmail.com",
+    "username": "mb80050047@gmail.com",
+    "password": "Lawrence2005",
+    "token": "ca99b392-8879-4dfd-8fa4-4ba0c1462e93",
+    "createdAt": "2025-12-02T13:14:01.331Z"
+  },
+  {
+    "id": "65a1d661-cdf7-46dc-b830-3d16457bd0c5",
+    "firstname": "Brandon",
+    "lastname": "Manley",
+    "email": "braMando1608@gmail.com",
+    "username": "braMando1608@gmail.com",
+    "password": "BraMando1608ley28",
+    "token": "2dff818d-0e4d-4daf-ad1d-02bbbfd31f33",
+    "createdAt": "2025-12-02T13:15:36.917Z"
+  },
+  {
+    "id": "1899c40f-167e-4cf0-817d-8a7465d11c5a",
+    "firstname": "Test",
+    "lastname": "User",
+    "email": "test@test.com",
+    "username": "test@test.com",
+    "password": "test123",
+    "token": "3d32a000-99b2-426e-a1e9-46e546855b14",
+    "createdAt": "2025-12-02T13:17:17.476Z"
+  },
+  {
+    "id": "f7567e16-59d7-4e7f-b4c0-546f673565e7",
+    "firstname": "kadijatu",
+    "lastname": "Mansaray",
+    "email": "kadijatuman2005@gmail.com",
+    "username": "kadijatuman2005@gmail.com",
+    "password": "dija2005@",
+    "token": "8f411a6a-859a-4eea-93a1-c55c55584668",
+    "createdAt": "2025-12-12T14:09:50.230Z"
+  },
+  {
+    "id": "665f2410-b6dc-48d2-9903-ffbcfba03fa4",
+    "firstname": "Hozzy",
+    "lastname": "Kamara",
+    "email": "Hoozykamara@gmail.com",
+    "username": "Hoozykamara@gmail.com",
+    "password": "1234567890",
+    "token": "d55486ce-32f3-4041-8ec0-95f0cb85b558",
+    "createdAt": "2026-01-29T00:39:31.484Z"
+  },
+  {
+    "id": "93eb71c9-7409-4f8b-a57f-2e5bd125322d",
+    "firstname": "John",
+    "lastname": "Bangura",
+    "email": "JohnBangura2007@gmail.com",
+    "username": "JohnBangura2007@gmail.com",
+    "password": "L33547676789",
+    "token": "ea23cc59-c276-488f-9994-e1d81599d3b9",
+    "createdAt": "2026-02-13T19:39:48.735Z"
+  },
+  {
+    "id": "659b18da-fe7c-4de5-aa23-c11dfd3bd9c2",
+    "firstname": "Hannah",
+    "lastname": "Kondeh",
+    "email": "kondehhannah2007@gmail.com",
+    "username": "kondehhannah2007@gmail.com",
+    "password": "1234567890",
+    "token": "86b06fa7-1fcf-42d4-9d49-60106f94b4bb",
+    "createdAt": "2026-02-13T19:50:23.724Z"
+  }
+]

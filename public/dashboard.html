@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Financial Shield - Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .header {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h1 {
+      color: #667eea;
+      font-size: 28px;
+    }
+
+    .profile-section {
+      position: relative;
+    }
+
+    .profile-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f8f9fa;
+      border: 2px solid #e1e8ed;
+      padding: 8px 15px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .profile-btn:hover {
+      background: #e9ecef;
+      border-color: #667eea;
+    }
+
+    .profile-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .profile-info {
+      text-align: left;
+    }
+
+    .profile-name {
+      font-weight: bold;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .profile-email {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .dropdown-arrow {
+      color: #666;
+      font-size: 12px;
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      min-width: 220px;
+      display: none;
+      z-index: 1000;
+      overflow: hidden;
+    }
+
+    .profile-dropdown.show {
+      display: block;
+      animation: dropdownSlide 0.3s ease;
+    }
+
+    @keyframes dropdownSlide {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .dropdown-item {
+      padding: 12px 20px;
+      color: #333;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .dropdown-item:hover {
+      background: #f8f9fa;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: #e1e8ed;
+      margin: 5px 0;
+    }
+
+    .dropdown-item.danger {
+      color: #ff4757;
+    }
+
+    .dropdown-item.danger:hover {
+      background: #fff5f5;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 22px;
+      border-bottom: 2px solid #667eea;
+      padding-bottom: 10px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      background: #f1f2f6;
+      color: #666;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    .tab-btn.active {
+      background: #667eea;
+      color: white;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    input, select, textarea, button {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 2px solid #e1e8ed;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    button.primary {
+      background: #667eea;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    button.primary:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .result.show {
+      display: block;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .result.low {
+      background: #d4edda;
+      border-left: 5px solid #28a745;
+      color: #155724;
+    }
+
+    .result.medium {
+      background: #fff3cd;
+      border-left: 5px solid #ffc107;
+      color: #856404;
+    }
+
+    .result.high {
+      background: #f8d7da;
+      border-left: 5px solid #dc3545;
+      color: #721c24;
+    }
+
+    .result h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .result p {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    .scam-indicators {
+      margin-top: 15px;
+      padding: 15px;
+      background: rgba(0,0,0,0.05);
+      border-radius: 8px;
+    }
+
+    .scam-indicators ul {
+      margin-left: 20px;
+      margin-top: 10px;
+    }
+
+    .scam-indicators li {
+      margin: 5px 0;
+    }
+
+    .loading {
+      text-align: center;
+      color: #667eea;
+      font-size: 18px;
+      padding: 20px;
+      display: none;
+    }
+
+    .loading.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🛡️ Smart Financial Shield</h1>
+      <div class="profile-section">
+        <div class="profile-btn" onclick="toggleDropdown()">
+          <div class="profile-avatar" id="profileAvatar">PK</div>
+          <div class="profile-info">
+            <div class="profile-name" id="profileName">Peter Kargbo</div>
+            <div class="profile-email" id="profileEmail">peterkargbo2005@gmail.com</div>
+          </div>
+          <span class="dropdown-arrow">▼</span>
+        </div>
+        <div class="profile-dropdown" id="profileDropdown">
+          <button class="dropdown-item" onclick="showProfile()">
+            <span>👤</span> My Profile
+          </button>
+          <button class="dropdown-item" onclick="showSettings()">
+            <span>⚙️</span> Settings
+          </button>
+          <button class="dropdown-item" onclick="showTransactionHistory()">
+            <span>📊</span> Transaction History
+          </button>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" onclick="showPrivacy()">
+            <span>🔒</span> Privacy Policy
+          </button>
+          <button class="dropdown-item" onclick="showTerms()">
+            <span>📄</span> Terms & Conditions
+          </button>
+          <button class="dropdown-item" onclick="showHelp()">
+            <span>❓</span> Help & Support
+          </button>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item danger" onclick="logout()">
+            <span>🚪</span> Logout
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('transaction')">💳 Transaction Check</button>
+        <button class="tab-btn" onclick="switchTab('message')">📧 Message Scam Detector</button>
+      </div>
+
+      <!-- Transaction Tab -->
+      <div id="transaction-tab" class="tab-content active">
+        <h2>Check Transaction Risk</h2>
+        
+        <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #2196f3;">
+          <strong>ℹ️ How Transaction Risk Detection Works:</strong>
+          <p style="margin: 10px 0 0 0; color: #333; font-size: 14px; line-height: 1.6;">
+            Our AI analyzes multiple factors including transaction amount, type (domestic/international), 
+            timing, frequency patterns, and historical behavior. Each factor contributes to a risk score (0-100). 
+            Scores above 70 indicate high fraud risk, 40-70 medium risk, and below 40 low risk.
+            <a href="how-it-works.html" style="color: #2196f3; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 5px;">
+              Learn more about how it works →
+            </a>
+          </p>
+        </div>
+
+        <input type="text" id="userId" placeholder="User ID (e.g., 123)" value="123">
+        <input type="number" id="amount" placeholder="Transaction Amount (e.g., 5000)" step="0.01">
+        <select id="type">
+          <option value="domestic">Domestic Transaction</option>
+          <option value="international">International Transaction</option>
+        </select>
+        <button class="primary" onclick="checkTransaction()">🔍 Check Risk</button>
+        
+        <div class="loading" id="transaction-loading">⏳ Analyzing transaction...</div>
+        <div class="result" id="transaction-result"></div>
+      </div>
+
+      <!-- Message Scam Tab -->
+      <div id="message-tab" class="tab-content">
+        <h2>Detect Message Scams</h2>
+        <p style="color: #666; margin-bottom: 15px;">Paste any suspicious message, email, or SMS to check for scam indicators.</p>
+        <textarea id="messageText" placeholder="Paste your message here...
+
+Example:
+'URGENT! Your bank account has been compromised. Click here immediately to verify your identity: http://fake-bank.com/verify'"></textarea>
+        <button class="primary" onclick="checkMessage()">🔍 Analyze Message</button>
+        
+        <div class="loading" id="message-loading">⏳ Analyzing message...</div>
+        <div class="result" id="message-result"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentToken = null;
+    let currentUser = null;
+
+    // Check authentication on page load
+    window.onload = function() {
+      const token = localStorage.getItem('token');
+      const firstname = localStorage.getItem('firstname');
+      const lastname = localStorage.getItem('lastname');
+      const email = localStorage.getItem('email');
+
+      if (!token || !firstname || !email) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      currentToken = token;
+      currentUser = { firstname, lastname, email };
+
+      // Update profile display
+      const initials = (firstname.charAt(0) + (lastname ? lastname.charAt(0) : '')).toUpperCase();
+      document.getElementById('profileAvatar').textContent = initials;
+      document.getElementById('profileName').textContent = `${firstname} ${lastname || ''}`.trim();
+      document.getElementById('profileEmail').textContent = email;
+    };
+
+    function toggleDropdown() {
+      const dropdown = document.getElementById('profileDropdown');
+      dropdown.classList.toggle('show');
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      const profileSection = document.querySelector('.profile-section');
+      const dropdown = document.getElementById('profileDropdown');
+      
+      if (!profileSection.contains(event.target)) {
+        dropdown.classList.remove('show');
+      }
+    });
+
+    function showProfile() {
+      window.location.href = 'profile.html';
+    }
+
+    function showSettings() {
+      window.location.href = 'settings.html';
+    }
+
+    function showTransactionHistory() {
+      window.location.href = 'transactions.html';
+    }
+
+    function showPrivacy() {
+      window.location.href = 'privacy.html';
+    }
+
+    function showTerms() {
+      window.location.href = 'terms.html';
+    }
+
+    function showHelp() {
+      window.location.href = 'help.html';
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      if (tab === 'transaction') {
+        document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+        document.getElementById('transaction-tab').classList.add('active');
+      } else {
+        document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+        document.getElementById('message-tab').classList.add('active');
+      }
+    }
+
+    async function checkTransaction() {
+      const userId = document.getElementById('userId').value || '123';
+      const amount = parseFloat(document.getElementById('amount').value);
+      const type = document.getElementById('type').value;
+      const resultDiv = document.getElementById('transaction-result');
+      const loadingDiv = document.getElementById('transaction-loading');
+
+      if (!amount || amount <= 0) {
+        alert('Please enter a valid transaction amount');
+        return;
+      }
+
+      resultDiv.classList.remove('show');
+      loadingDiv.classList.add('show');
+
+      try {
+        // Check transaction
+        const res = await fetch('http://localhost:3000/api/transaction', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${currentToken}`
+          },
+          body: JSON.stringify({ amount, type, timestamp: new Date().toISOString() })
+        });
+
+        const result = await res.json();
+        const tx = result.tx;
+
+        let riskClass = 'low';
+        let riskEmoji = '✅';
+        if (tx.flag === 'MEDIUM_RISK') {
+          riskClass = 'medium';
+          riskEmoji = '⚠️';
+        } else if (tx.flag === 'HIGH_RISK') {
+          riskClass = 'high';
+          riskEmoji = '🚨';
+        }
+
+        resultDiv.className = `result ${riskClass} show`;
+        
+        // Build risk factors list
+        const factorsList = tx.riskFactors && tx.riskFactors.length > 0 
+          ? `<div style="margin-top: 15px; padding: 15px; background: rgba(0,0,0,0.05); border-radius: 8px;">
+               <strong>🔍 Risk Factors Detected:</strong>
+               <ul style="margin: 10px 0 0 20px;">
+                 ${tx.riskFactors.map(f => `<li style="margin: 5px 0;">${f}</li>`).join('')}
+               </ul>
+             </div>`
+          : '';
+
+        resultDiv.innerHTML = `
+          <h3>${riskEmoji} ${tx.flag.replace('_', ' ')}</h3>
+          <p><strong>Risk Score:</strong> ${tx.riskScore}/100</p>
+          <p><strong>Amount:</strong> $${amount.toLocaleString()}</p>
+          <p><strong>Type:</strong> ${type.charAt(0).toUpperCase() + type.slice(1)}</p>
+          <p><strong>Timestamp:</strong> ${new Date(tx.timestamp).toLocaleString()}</p>
+          ${factorsList}
+          <p style="margin-top: 15px; padding-top: 15px; border-top: 2px solid rgba(0,0,0,0.1);"><strong>📋 Recommendation:</strong> ${tx.recommendation}</p>
+        `;
+      } catch (err) {
+        resultDiv.className = 'result high show';
+        resultDiv.innerHTML = `<h3>❌ Error</h3><p>${err.message}</p>`;
+      } finally {
+        loadingDiv.classList.remove('show');
+      }
+    }
+
+    function checkMessage() {
+      const message = document.getElementById('messageText').value.trim();
+      const resultDiv = document.getElementById('message-result');
+      const loadingDiv = document.getElementById('message-loading');
+
+      if (!message) {
+        alert('Please paste a message to analyze');
+        return;
+      }
+
+      resultDiv.classList.remove('show');
+      loadingDiv.classList.add('show');
+
+      // Simulate analysis delay
+      setTimeout(() => {
+        const analysis = analyzeMessage(message);
+        
+        let riskClass = 'low';
+        let riskEmoji = '✅';
+        if (analysis.score > 70) {
+          riskClass = 'high';
+          riskEmoji = '🚨';
+        } else if (analysis.score > 40) {
+          riskClass = 'medium';
+          riskEmoji = '⚠️';
+        }
+
+        resultDiv.className = `result ${riskClass} show`;
+        resultDiv.innerHTML = `
+          <h3>${riskEmoji} Scam Risk: ${analysis.score}/100</h3>
+          <p><strong>Assessment:</strong> ${analysis.assessment}</p>
+          ${analysis.indicators.length > 0 ? `
+            <div class="scam-indicators">
+              <strong>⚠️ Suspicious Indicators Found:</strong>
+              <ul>
+                ${analysis.indicators.map(ind => `<li>${ind}</li>`).join('')}
+              </ul>
+            </div>
+          ` : '<p style="margin-top: 10px;">✅ No obvious scam indicators detected.</p>'}
+          <p style="margin-top: 15px;"><strong>Recommendation:</strong> ${analysis.recommendation}</p>
+        `;
+
+        loadingDiv.classList.remove('show');
+      }, 800);
+    }
+
+    function analyzeMessage(message) {
+      const lowerMsg = message.toLowerCase();
+      let score = 0;
+      const indicators = [];
+
+      // Check for urgency words
+      const urgencyWords = ['urgent', 'immediately', 'act now', 'limited time', 'expires', 'hurry'];
+      if (urgencyWords.some(word => lowerMsg.includes(word))) {
+        score += 20;
+        indicators.push('Uses urgency tactics to pressure quick action');
+      }
+
+      // Check for suspicious links
+      if (lowerMsg.includes('http://') || lowerMsg.match(/bit\.ly|tinyurl|shortened/)) {
+        score += 25;
+        indicators.push('Contains suspicious or shortened links');
+      }
+
+      // Check for personal info requests
+      const infoRequests = ['password', 'ssn', 'social security', 'credit card', 'bank account', 'pin', 'verify your'];
+      if (infoRequests.some(word => lowerMsg.includes(word))) {
+        score += 30;
+        indicators.push('Requests sensitive personal or financial information');
+      }
+
+      // Check for threats
+      const threats = ['suspended', 'locked', 'compromised', 'unauthorized', 'fraud', 'illegal'];
+      if (threats.some(word => lowerMsg.includes(word))) {
+        score += 20;
+        indicators.push('Uses threatening or alarming language');
+      }
+
+      // Check for prizes/money
+      const prizes = ['won', 'winner', 'prize', 'lottery', 'million', 'inheritance', 'claim'];
+      if (prizes.some(word => lowerMsg.includes(word))) {
+        score += 25;
+        indicators.push('Promises unexpected money or prizes');
+      }
+
+      // Check for poor grammar (simple check)
+      if (message.match(/[A-Z]{5,}/) || message.includes('!!!')) {
+        score += 10;
+        indicators.push('Excessive capitalization or punctuation');
+      }
+
+      // Check for impersonation
+      const impersonation = ['irs', 'fbi', 'bank', 'paypal', 'amazon', 'microsoft', 'apple'];
+      if (impersonation.some(word => lowerMsg.includes(word))) {
+        score += 15;
+        indicators.push('May be impersonating a legitimate organization');
+      }
+
+      let assessment, recommendation;
+      if (score > 70) {
+        assessment = 'HIGH RISK - This message shows multiple signs of a scam';
+        recommendation = '🚨 DO NOT respond, click links, or provide any information. Delete immediately and report as spam.';
+      } else if (score > 40) {
+        assessment = 'MEDIUM RISK - This message has some suspicious characteristics';
+        recommendation = '⚠️ Be cautious. Verify the sender through official channels before taking any action.';
+      } else {
+        assessment = 'LOW RISK - This message appears relatively safe';
+        recommendation = '✅ Message seems legitimate, but always verify sender identity for sensitive matters.';
+      }
+
+      return { score, indicators, assessment, recommendation };
+    }
+
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('firstname');
+      localStorage.removeItem('lastname');
+      localStorage.removeItem('email');
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

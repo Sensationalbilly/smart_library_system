@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard - Fraud Checker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <h2>Dashboard</h2>
+    <p>User ID: <span id="userId"></span></p>
+
+    <h3>Make a Transaction</h3>
+
+    <input id="amount" type="number" placeholder="Amount" />
+
+    <select id="type">
+      <option value="local">Local</option>
+      <option value="international">International</option>
+    </select>
+
+    <button onclick="makeTransaction()">Check Fraud Risk</button>
+
+    <div id="result"></div>
+
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    // Check if user is logged in
+    const token = localStorage.getItem('sfs_token');
+    const user = localStorage.getItem('sfs_user');
+
+    if (!token) {
+      window.location.href = 'index.html';
+    } else {
+      document.getElementById('userId').textContent = user;
+    }
+
+    // Logout function
+    function logout() {
+      localStorage.removeItem('sfs_token');
+      localStorage.removeItem('sfs_user');
+      window.location.href = 'index.html';
+    }
+
+    // Make transaction
+    async function makeTransaction() {
+      const amount = document.getElementById('amount').value;
+      const type = document.getElementById('type').value;
+      const resultEl = document.getElementById('result');
+
+      if (!amount) {
+        alert('Enter amount!');
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/fraud-check', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify({ amount: Number(amount), type })
+        });
+
+        const data = await response.json();
+
+        resultEl.innerHTML = `
+          <p><strong>Risk Score:</strong> ${data.riskScore}</p>
+          <p><strong>Flag:</strong> ${data.flag}</p>
+        `;
+      } catch (err) {
+        resultEl.textContent = '❌ Error: ' + err.message;
+      }
+    }
+  </script>
+</body>
+</html>

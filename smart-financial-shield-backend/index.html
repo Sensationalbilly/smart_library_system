@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fraud Detection Demo App</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 500px; margin: auto; background-color: #f5f5f5; }
+    input, button, select { padding: 10px; margin: 5px 0; width: 100%; font-size: 16px; border: 1px solid #ddd; border-radius: 4px; }
+    button { cursor: pointer; background-color: #007bff; color: white; border: none; transition: background-color 0.3s; }
+    button:hover { background-color: #0056b3; }
+    button:disabled { background-color: #ccc; cursor: not-allowed; }
+    #dashboard { display: none; margin-top: 20px; background-color: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .alert { font-weight: bold; padding: 10px; margin-top: 10px; border-radius: 5px; }
+    .low { background-color: #d4edda; color: #155724; }
+    .medium { background-color: #fff3cd; color: #856404; }
+    .high { background-color: #f8d7da; color: #721c24; }
+    label { display: block; margin-top: 10px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<h1>Fraud Detection Demo App</h1>
+
+<div id="login">
+  <h2>Sign In</h2>
+  <label for="userId">User ID:</label>
+  <input type="text" id="userId" placeholder="User ID (e.g., 123)" required>
+  <label for="amount">Transaction Amount:</label>
+  <input type="number" id="amount" placeholder="Transaction Amount" min="0" step="0.01" required>
+  <label for="type">Transaction Type:</label>
+  <select id="type" required>
+    <option value="">Select transaction type</option>
+    <option value="domestic">Domestic</option>
+    <option value="international">International</option>
+  </select>
+  <button id="loginBtn">Login &amp; Check Risk</button>
+</div>
+
+<div id="dashboard">
+  <h2>Dashboard</h2>
+  <p id="userInfo"></p>
+  <p id="riskInfo"></p>
+  <button id="logoutBtn">Logout</button>
+</div>
+
+<script>
+const loginDiv = document.getElementById("login");
+const dashboardDiv = document.getElementById("dashboard");
+const userInfo = document.getElementById("userInfo");
+const riskInfo = document.getElementById("riskInfo");
+
+document.getElementById("loginBtn").onclick = async () => {
+  const userId = document.getElementById("userId").value || "123";
+  const amount = parseFloat(document.getElementById("amount").value) || 0;
+  const type = document.getElementById("type").value || "domestic";
+
+  // Simulate login success
+  loginDiv.style.display = "none";
+  dashboardDiv.style.display = "block";
+  userInfo.textContent = `User ID: ${userId}, Transaction: ${amount} (${type})`;
+
+  // Call FraudRisk API
+  const url = "https://yh9ch7tkdd.execute-api.eu-north-1.amazonaws.com/prod/calculate-risk";
+  const data = { userId, amount, type, timestamp: new Date().toISOString() };
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+    }
+    
+    const response = await res.json();
+    
+    if (!response.riskScore || !response.flag) {
+      throw new Error("Invalid API response format");
+    }
+
+    // Show risk alert
+    let alertClass = "low";
+    if(response.flag === "MEDIUM_RISK") alertClass = "medium";
+    if(response.flag === "HIGH_RISK") alertClass = "high";
+
+    riskInfo.innerHTML = `<span class="alert ${alertClass}">⚠️ Risk Score: ${response.riskScore} — ${response.flag}</span>`;
+  } catch (err) {
+    riskInfo.textContent = `❌ Error calling fraud API: ${err.message}`;
+  }
+};
+
+document.getElementById("logoutBtn").onclick = () => {
+  dashboardDiv.style.display = "none";
+  loginDiv.style.display = "block";
+  document.getElementById("userId").value = "";
+  document.getElementById("amount").value = "";
+  riskInfo.textContent = "";
+};
+</script>
+
+</body>
+</html>

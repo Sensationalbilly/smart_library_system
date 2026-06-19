@@ -1,0 +1,43 @@
+body {
+  font-family: Arial;
+  background: #111;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+}
+
+.container {
+  width: 300px;
+  background: #1a1a1a;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 7px 0;
+  border-radius: 5px;
+  border: none;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #2e8bff;
+  border: none;
+  margin-top: 10px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+button.logout {
+  background: #ff4444;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}

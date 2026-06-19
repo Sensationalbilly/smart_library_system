@@ -1,0 +1,109 @@
+service: smart-financial-shield-backend
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  stage: ${opt:stage, 'dev'}
+  environment:
+    STAGE: ${self:provider.stage}
+    NODE_ENV: ${self:provider.stage}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+          Resource: "*"
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "*"
+
+functions:
+  hello:
+    handler: src/handlers/hello.handler
+    events:
+      - http:
+          path: hello
+          method: get
+          cors: true
+  
+  createTransaction:
+    handler: src/handlers/transactions/create.handler
+    events:
+      - http:
+          path: transactions
+          method: post
+          cors: true
+          authorizer:
+            type: TOKEN
+            identitySource: method.request.header.Authorization
+  
+  getTransactions:
+    handler: src/handlers/transactions/get.handler
+    events:
+      - http:
+          path: transactions
+          method: get
+          cors: true
+  
+  getTransaction:
+    handler: src/handlers/transactions/getById.handler
+    events:
+      - http:
+          path: transactions/{id}
+          method: get
+          cors: true
+  
+  updateTransaction:
+    handler: src/handlers/transactions/update.handler
+    events:
+      - http:
+          path: transactions/{id}
+          method: put
+          cors: true
+  
+  deleteTransaction:
+    handler: src/handlers/transactions/delete.handler
+    events:
+      - http:
+          path: transactions/{id}
+          method: delete
+          cors: true
+
+  analyzeScamMessage:
+    handler: src/handlers/scam-detection/analyze.handler
+    events:
+      - http:
+          path: scam-detection/analyze
+          method: post
+          cors: true
+
+  calculateRisk:
+    handler: src/handlers/calculate-risk.handler
+    events:
+      - http:
+          path: calculate-risk
+          method: post
+          cors: true
+
+plugins:
+  - serverless-offline
+
+package:
+  individually: true
+  exclude:
+    - node_modules/**
+    - .git/**
+    - .env
+    - tests/**

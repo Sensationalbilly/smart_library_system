@@ -1,0 +1,28 @@
+{
+  "name": "smart-financial-shield-backend",
+  "version": "1.0.0",
+  "description": "AWS Lambda Serverless API for Smart Financial Shield",
+  "main": "handler.js",
+  "scripts": {
+    "dev": "serverless offline start",
+    "deploy": "serverless deploy",
+    "deploy:function": "serverless deploy function",
+    "logs": "serverless logs",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [
+    "aws",
+    "lambda",
+    "serverless",
+    "api-gateway"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "serverless": "^3.38.0",
+    "serverless-offline": "^13.0.0",
+    "jest": "^29.0.0"
+  }
+}

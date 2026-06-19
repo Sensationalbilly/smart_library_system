@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - Smart Financial Shield</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container { max-width: 800px; margin: 0 auto; }
+    .header {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 { color: #667eea; font-size: 28px; }
+    .back-btn {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .back-btn:hover { background: #5568d3; }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+    }
+    .profile-header {
+      text-align: center;
+      padding: 30px 0;
+      border-bottom: 2px solid #e1e8ed;
+      margin-bottom: 30px;
+    }
+    .profile-avatar-large {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 48px;
+      margin: 0 auto 20px;
+    }
+    .profile-name { font-size: 28px; color: #333; margin-bottom: 5px; }
+    .profile-email { font-size: 16px; color: #666; }
+    .info-group {
+      margin-bottom: 25px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 10px;
+    }
+    .info-label {
+      font-size: 12px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+    .info-value {
+      font-size: 18px;
+      color: #333;
+      font-weight: 500;
+    }
+    .edit-btn {
+      width: 100%;
+      padding: 14px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    .edit-btn:hover { background: #5568d3; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>👤 My Profile</h1>
+      <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+    </div>
+
+    <div class="card">
+      <div class="profile-header">
+        <div class="profile-avatar-large" id="avatarLarge">PK</div>
+        <div class="profile-name" id="fullName">Peter Kargbo</div>
+        <div class="profile-email" id="emailDisplay">peterkargbo2005@gmail.com</div>
+      </div>
+
+      <div class="info-group">
+        <div class="info-label">First Name</div>
+        <div class="info-value" id="firstName">Peter</div>
+      </div>
+
+      <div class="info-group">
+        <div class="info-label">Last Name</div>
+        <div class="info-value" id="lastName">Kargbo</div>
+      </div>
+
+      <div class="info-group">
+        <div class="info-label">Email Address</div>
+        <div class="info-value" id="email">peterkargbo2005@gmail.com</div>
+      </div>
+
+      <div class="info-group">
+        <div class="info-label">User ID</div>
+        <div class="info-value" id="userId">Loading...</div>
+      </div>
+
+      <div class="info-group">
+        <div class="info-label">Member Since</div>
+        <div class="info-value" id="memberSince">Loading...</div>
+      </div>
+
+      <button class="edit-btn" onclick="alert('Edit profile feature coming soon!')">✏️ Edit Profile</button>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function() {
+      const token = localStorage.getItem('token');
+      const firstname = localStorage.getItem('firstname');
+      const lastname = localStorage.getItem('lastname');
+      const email = localStorage.getItem('email');
+      const userId = localStorage.getItem('userId');
+
+      if (!token) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      const initials = (firstname.charAt(0) + (lastname ? lastname.charAt(0) : '')).toUpperCase();
+      document.getElementById('avatarLarge').textContent = initials;
+      document.getElementById('fullName').textContent = `${firstname} ${lastname || ''}`.trim();
+      document.getElementById('emailDisplay').textContent = email;
+      document.getElementById('firstName').textContent = firstname;
+      document.getElementById('lastName').textContent = lastname || 'N/A';
+      document.getElementById('email').textContent = email;
+      document.getElementById('userId').textContent = userId;
+      document.getElementById('memberSince').textContent = new Date().toLocaleDateString();
+    };
+  </script>
+</body>
+</html>

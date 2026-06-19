@@ -1,0 +1,99 @@
+[
+  {
+    "id": "74e78f83-ff8a-49f7-9de6-ba462228fb22",
+    "userId": "dbc90e25-b6ef-42cc-9ae3-fc268cd27b5c",
+    "amount": 6000,
+    "type": "international",
+    "timestamp": "2025-12-01T20:24:13.144Z",
+    "riskScore": 150,
+    "flag": "HIGH_RISK"
+  },
+  {
+    "id": "5d434e18-5629-4eee-9dd2-3b1955e6d4ff",
+    "userId": "dbc90e25-b6ef-42cc-9ae3-fc268cd27b5c",
+    "amount": 8000,
+    "type": "international",
+    "timestamp": "2025-12-01T20:34:26.938Z",
+    "riskScore": 150,
+    "flag": "HIGH_RISK"
+  },
+  {
+    "id": "eb1988c4-600a-472a-b17a-61b2e652d74e",
+    "userId": "dbc90e25-b6ef-42cc-9ae3-fc268cd27b5c",
+    "amount": 8000,
+    "type": "domestic",
+    "timestamp": "2025-12-01T20:34:32.712Z",
+    "riskScore": 110,
+    "flag": "HIGH_RISK"
+  },
+  {
+    "id": "e25abeec-019f-4d13-9619-3c20924baff7",
+    "userId": "3ee39377-10a2-437a-a0fe-c70ab47ad04d",
+    "amount": 8000,
+    "type": "domestic",
+    "timestamp": "2025-12-01T21:19:11.670Z",
+    "riskScore": 35,
+    "flag": "LOW_RISK",
+    "riskFactors": [
+      "High transaction amount ($5,000-$10,000)",
+      "Round number amount (common fraud pattern)"
+    ],
+    "recommendation": "Transaction approved. No suspicious activity detected."
+  },
+  {
+    "id": "037c584a-e8c5-4ea8-954c-94ecfd7388e5",
+    "userId": "3ee39377-10a2-437a-a0fe-c70ab47ad04d",
+    "amount": 1000,
+    "type": "domestic",
+    "timestamp": "2025-12-01T21:19:24.833Z",
+    "riskScore": 10,
+    "flag": "LOW_RISK",
+    "riskFactors": [
+      "Round number amount (common fraud pattern)"
+    ],
+    "recommendation": "Transaction approved. No suspicious activity detected."
+  },
+  {
+    "id": "a130af6c-dbc7-47e4-8dcc-5da9741755fe",
+    "userId": "3ee39377-10a2-437a-a0fe-c70ab47ad04d",
+    "amount": 10,
+    "type": "international",
+    "timestamp": "2025-12-01T21:19:30.800Z",
+    "riskScore": 30,
+    "flag": "LOW_RISK",
+    "riskFactors": [
+      "International transaction (higher fraud risk)"
+    ],
+    "recommendation": "Transaction approved. No suspicious activity detected."
+  },
+  {
+    "id": "c881346a-8757-4f19-90f5-9b247162f200",
+    "userId": "3ee39377-10a2-437a-a0fe-c70ab47ad04d",
+    "amount": 1000000,
+    "type": "domestic",
+    "timestamp": "2025-12-01T21:19:38.657Z",
+    "riskScore": 75,
+    "flag": "HIGH_RISK",
+    "riskFactors": [
+      "Very high transaction amount (>$10,000)",
+      "Multiple transactions in short time period",
+      "Round number amount (common fraud pattern)"
+    ],
+    "recommendation": "Transaction blocked. Please verify your identity or contact support."
+  },
+  {
+    "id": "ac95f345-9fda-4c74-9603-672332ad1dc8",
+    "userId": "3ee39377-10a2-437a-a0fe-c70ab47ad04d",
+    "amount": 10000,
+    "type": "domestic",
+    "timestamp": "2025-12-01T21:19:47.714Z",
+    "riskScore": 60,
+    "flag": "MEDIUM_RISK",
+    "riskFactors": [
+      "High transaction amount ($5,000-$10,000)",
+      "Multiple transactions in short time period",
+      "Round number amount (common fraud pattern)"
+    ],
+    "recommendation": "Additional verification required. Please confirm this transaction."
+  }
+]
